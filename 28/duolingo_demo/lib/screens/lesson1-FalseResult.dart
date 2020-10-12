@@ -178,13 +178,6 @@ class _Lesson1_FalseResultState extends State<Lesson1_FalseResult> {
           ],
         ),
       ),
-      //   floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //   },
-      //   label: Text('cccccccccccccccccccccccccccccccccc'),
-      //   backgroundColor: Colors.lightGreenAccent[700],
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

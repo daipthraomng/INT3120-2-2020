@@ -64,10 +64,11 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
             Image.asset('assets/images/heart.png', height: 30),
           ])),
       body: new Container(
-        margin: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            new Padding(padding: EdgeInsets.all(10.0)),
+            // new Padding(padding: EdgeInsets.all(10.0)),
             Container(
               alignment: Alignment.topLeft,
               height: 30,
@@ -79,7 +80,7 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
                 ),
               ),
             ),
-            new Padding(padding: EdgeInsets.all(30.0)),
+            // new Padding(padding: EdgeInsets.all(30.0)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -91,7 +92,7 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
                     2),
               ],
             ),
-            new Padding(padding: EdgeInsets.all(5.0)),
+            // new Padding(padding: EdgeInsets.all(5.0)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -103,72 +104,11 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
                     4),
               ],
             ),
-            new Padding(padding: EdgeInsets.all(45.0)),
-            Container(
-              width: 400,
-              height: 50,
-              //padding: EdgeInsets.all(2.0),
-              child: Stack(
-                children: <Widget>[
-                  new Positioned(
-                      top: -40,
-                      child: Container(
-                        width: 420.0,
-                        height: 120.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.lightGreenAccent[100],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'TUYỆT VỜI!',
-                            style: new TextStyle(
-                              color: Colors.lightGreenAccent[700],
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )),
-                  Column(
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.all(1.0)),
-                      Center(
-                        child: MaterialButton(
-                          minWidth: 340.0,
-                          // color: isTapped ? Colors.green : Colors.grey,
-                          color: Colors.lightGreenAccent[700],
-                          height: 40.0,
-                          onPressed: () {
-                            Navigator.push(
-                                // EDIT: lesson1 -> lesson1
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Lesson2()));
-                          },
-                          child: new Text(
-                            'TIẾP TỤC',
-                            style: new TextStyle(
-                                fontSize: 20.0, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-                overflow: Overflow.visible,
-              ),
-            ),
+            // new Padding(padding: EdgeInsets.all(45.0)),
+            RightCheckButton(),
           ],
         ),
       ),
-      //   floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //   },
-      //   label: Text('cccccccccccccccccccccccccccccccccc'),
-      //   backgroundColor: Colors.lightGreenAccent[700],
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -193,6 +133,71 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Image.asset(image, height: 190),
+      ),
+    );
+  }
+}
+
+class RightCheckButton extends StatelessWidget {
+  const RightCheckButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      height: 50,
+      //padding: EdgeInsets.all(2.0),
+      child: Stack(
+        children: <Widget>[
+          new Positioned(
+              top: -40,
+              child: Container(
+                width: 420.0,
+                height: 120.0,
+                decoration: new BoxDecoration(
+                  color: Colors.lightGreenAccent[100],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'TUYỆT VỜI!',
+                    style: new TextStyle(
+                      color: Colors.lightGreenAccent[700],
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )),
+          Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(1.0)),
+              Center(
+                child: MaterialButton(
+                  minWidth: 340.0,
+                  // color: isTapped ? Colors.green : Colors.grey,
+                  color: Colors.lightGreenAccent[700],
+                  height: 40.0,
+                  onPressed: () {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson1
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Lesson2()));
+                  },
+                  child: new Text(
+                    'TIẾP TỤC',
+                    style: new TextStyle(
+                        fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        overflow: Overflow.visible,
       ),
     );
   }

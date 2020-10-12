@@ -1,4 +1,6 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:duolingo_demo/screens/lesson1-TrueResult.dart';
+import 'package:duolingo_demo/screens/lesson1.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import './screens/home.dart';

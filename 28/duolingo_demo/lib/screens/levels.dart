@@ -16,22 +16,12 @@ class _LevelsState extends State<Levels> {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 2,
-            title: Row(children: <Widget>[
-              SizedBox(
-                width: 15,
-              ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
               Image.asset('assets/images/america.png', height: 25),
-              SizedBox(
-                width: 45,
-              ),
               appBarItem('assets/images/crown.png', '0', Colors.grey),
-              SizedBox(
-                width: 45,
-              ),
               appBarItem('assets/images/streak.png', '0', Colors.grey),
-              SizedBox(
-                width: 40,
-              ),
               Image.asset('assets/images/heart.png', height: 30),
               // Row(
               //   mainAxisSize: MainAxisSize.min,
@@ -41,15 +31,6 @@ class _LevelsState extends State<Levels> {
               //   ],
               // )
             ])),
-        // floatingActionButton: FloatingActionButton(
-        //   child: Icon(
-        //     Icons.directions_bike,
-        //     color: Colors.blue[300],
-        //     size: 30,
-        //   ),
-        //   backgroundColor: Colors.white,
-        //   onPressed: () {},
-        // ),
         body: Stack(
           alignment: Alignment.topRight,
           children: <Widget>[

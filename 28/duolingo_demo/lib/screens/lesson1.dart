@@ -1,7 +1,5 @@
 import 'package:duolingo_demo/screens/lesson2.dart';
 import 'package:flutter/material.dart';
-import 'package:duolingo_demo/screens/lesson1-FalseResult.dart';
-import 'package:duolingo_demo/screens/lesson1-TrueResult.dart';
 import 'home.dart';
 
 class Lesson1 extends StatefulWidget {
@@ -12,6 +10,7 @@ class Lesson1 extends StatefulWidget {
 class _Lesson1State extends State<Lesson1> {
   bool isTapped;
   var numberTapped;
+  int result; // var dung trong body de hien thi widget button nao.
   var isChecked = [false, false, false, false];
   // luu vi tri gan nhat duoc Tap
   var lastChecked;
@@ -19,6 +18,7 @@ class _Lesson1State extends State<Lesson1> {
   @override
   void initState() {
     super.initState();
+    result = 0;
     isTapped = false;
     numberTapped = 0;
     lastChecked = 0;
@@ -31,44 +31,44 @@ class _Lesson1State extends State<Lesson1> {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 2,
-            title: Row(children: <Widget>[
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Home()));
-                  },
-                  child: Image.asset('assets/images/x_button.png', height: 25)),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                child: Container(
-                  height: 15,
-                  width: 190,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Home()));
+                      },
+                      child: Image.asset('assets/images/x_button.png',
+                          height: 25)),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        height: 15,
+                        width: 210,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      Container(
+                        height: 15,
+                        width: 210 / 8,
+                        decoration: new BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      )
+                    ],
                   ),
-                  child: new Container(
-                    height: 15,
-                    width: 20,
-                    decoration: new BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Image.asset('assets/images/heart.png', height: 30),
-            ])),
+                  Image.asset('assets/images/heart.png', height: 30),
+                ])),
         body: new Container(
           margin: const EdgeInsets.all(10.0),
-          // alignment: Alignment.topCenter,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Padding(padding: EdgeInsets.all(10.0)),
+              // new Padding(padding: EdgeInsets.all(10.0)),
               Container(
                 alignment: Alignment.topLeft,
                 height: 30,
@@ -80,7 +80,7 @@ class _Lesson1State extends State<Lesson1> {
                   ),
                 ),
               ),
-              new Padding(padding: EdgeInsets.all(30.0)),
+              // new Padding(padding: EdgeInsets.all(30.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -92,7 +92,7 @@ class _Lesson1State extends State<Lesson1> {
                       2),
                 ],
               ),
-              new Padding(padding: EdgeInsets.all(5.0)),
+              // new Padding(padding: EdgeInsets.all(5.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -104,33 +104,13 @@ class _Lesson1State extends State<Lesson1> {
                       4),
                 ],
               ),
-              new Padding(padding: EdgeInsets.all(35.0)),
-              MaterialButton(
-                minWidth: 350.0,
-                color: isTapped ? Colors.green : Colors.grey,
-                height: 40.0,
-                onPressed: () {
-                  if (numberTapped == 1) {
-                    debugPrint("true");
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson1
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Lesson1_TrueResult()));
-                  } else {
-                    debugPrint("wrong");
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson1
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Lesson1_FalseResult()));
-                  }
-                },
-                child: new Text(
-                  'KIỂM TRA',
-                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-              ),
+              //CheckButton(isTapped: isTapped, numberTapped: numberTapped),
+              if(result == 0)
+                CheckButton(),
+              if(result == 1)
+                RightCheckButton(),
+              if(result == 2)
+                FalseCheckButton(),
             ],
           ),
         ));
@@ -153,11 +133,226 @@ class _Lesson1State extends State<Lesson1> {
         height: 190,
         width: 140,
         decoration: new BoxDecoration(
-          color: isChecked[number - 1] ? Colors.blue : Colors.grey,
+          color: Colors.white,
+          border: Border.all(
+              color: isChecked[number - 1] ? Colors.blue : Colors.grey,
+              width: 3),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Image.asset(image, height: 190),
       ),
     );
   }
+
+  Widget CheckButton() {
+    return MaterialButton(
+      minWidth: 350.0,
+      color: isTapped ? Colors.green : Colors.grey,
+      height: 40.0,
+      onPressed: () {
+        if (isTapped) {
+          if (numberTapped == 1) {
+            // Navigator.push(
+            //     // EDIT: lesson1 -> lesson1
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
+            result = 1;
+            setState(() {
+            });
+          } else {
+            // Navigator.push(
+            //     // EDIT: lesson1 -> lesson1
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
+            result = 2;
+            setState(() {
+            });
+          }
+        }
+      },
+      child: new Text(
+        'KIỂM TRA',
+        style: new TextStyle(fontSize: 20.0, color: Colors.white),
+      ),
+    );
+  }
 }
+
+class FalseCheckButton extends StatelessWidget {
+  const FalseCheckButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      height: 50,
+      //padding: EdgeInsets.all(2.0),
+      child: Stack(
+        children: <Widget>[
+          new Positioned(
+              top: -70,
+              child: Container(
+                width: 420.0,
+                height: 150.0,
+                decoration: new BoxDecoration(
+                  color: Colors.redAccent[100],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    children: [
+                      Text(
+                        'ĐÁP ÁN ĐÚNG:',
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                          color: Colors.red[600],
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'coffee',
+                        style: new TextStyle(
+                          color: Colors.red[600],
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+          Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(1.0)),
+              Center(
+                child: MaterialButton(
+                  minWidth: 340.0,
+                  // color: isTapped ? Colors.green : Colors.grey,
+                  color: Colors.red[600],
+                  height: 40.0,
+                  onPressed: () {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                  },
+                  child: new Text(
+                    'TIẾP TỤC',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        overflow: Overflow.visible,
+      ),
+    );
+  }
+}
+
+class RightCheckButton extends StatelessWidget {
+  const RightCheckButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      height: 50,
+      //padding: EdgeInsets.all(2.0),
+      child: Stack(
+        children: <Widget>[
+          new Positioned(
+              top: -40,
+              child: Container(
+                width: 420.0,
+                height: 120.0,
+                decoration: new BoxDecoration(
+                  color: Colors.lightGreenAccent[100],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'TUYỆT VỜI!',
+                    style: new TextStyle(
+                      color: Colors.lightGreenAccent[700],
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )),
+          Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(1.0)),
+              Center(
+                child: MaterialButton(
+                  minWidth: 340.0,
+                  color: Colors.lightGreenAccent[700],
+                  height: 40.0,
+                  onPressed: () {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                  },
+                  child: new Text(
+                    'TIẾP TỤC',
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        overflow: Overflow.visible,
+      ),
+    );
+  }
+}
+
+// class CheckButton extends StatelessWidget {
+//   const CheckButton({
+//     Key key,
+//     @required this.isTapped,
+//     @required this.numberTapped,
+//   }) : super(key: key);
+
+//   final bool isTapped;
+//   final int numberTapped;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialButton(
+//       minWidth: 350.0,
+//       color: isTapped ? Colors.green : Colors.grey,
+//       height: 40.0,
+//       onPressed: () {
+//         if (isTapped) {
+//           if (numberTapped == 1) {
+//             Navigator.push(
+//                 // EDIT: lesson1 -> lesson1
+//                 context,
+//                 MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
+//           } else {
+//             Navigator.push(
+//                 // EDIT: lesson1 -> lesson1
+//                 context,
+//                 MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
+//           }
+//         }
+//       },
+//       child: new Text(
+//         'KIỂM TRA',
+//         style: new TextStyle(fontSize: 20.0, color: Colors.white),
+//       ),
+//     );
+//   }
+// }
