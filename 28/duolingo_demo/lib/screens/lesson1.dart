@@ -64,12 +64,14 @@ class _Lesson1State extends State<Lesson1> {
                   Image.asset('assets/images/heart.png', height: 30),
                 ])),
         body: new Container(
-          margin: const EdgeInsets.all(10.0),
+          //margin: const EdgeInsets.all(10.0),
+          margin:EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               // new Padding(padding: EdgeInsets.all(10.0)),
               Container(
+                margin:EdgeInsets.only(left: 15.0, right: 0.0, top: 10, bottom: 0),
                 alignment: Alignment.topLeft,
                 height: 30,
                 child: Text(
@@ -80,7 +82,6 @@ class _Lesson1State extends State<Lesson1> {
                   ),
                 ),
               ),
-              // new Padding(padding: EdgeInsets.all(30.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -113,7 +114,8 @@ class _Lesson1State extends State<Lesson1> {
                 FalseCheckButton(),
             ],
           ),
-        ));
+        )
+      );
   }
 
   Widget answer(String image, var number) {
@@ -136,7 +138,7 @@ class _Lesson1State extends State<Lesson1> {
           color: Colors.white,
           border: Border.all(
               color: isChecked[number - 1] ? Colors.blue : Colors.grey,
-              width: 3),
+              width: 2),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Image.asset(image, height: 190),
@@ -145,34 +147,40 @@ class _Lesson1State extends State<Lesson1> {
   }
 
   Widget CheckButton() {
-    return MaterialButton(
-      minWidth: 350.0,
-      color: isTapped ? Colors.green : Colors.grey,
-      height: 40.0,
-      onPressed: () {
-        if (isTapped) {
-          if (numberTapped == 1) {
-            // Navigator.push(
-            //     // EDIT: lesson1 -> lesson1
-            //     context,
-            //     MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
-            result = 1;
-            setState(() {
-            });
-          } else {
-            // Navigator.push(
-            //     // EDIT: lesson1 -> lesson1
-            //     context,
-            //     MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
-            result = 2;
-            setState(() {
-            });
+    return Container(
+      margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+      child: MaterialButton(
+        minWidth: 340.0,
+        color: isTapped ? Colors.green : Colors.grey,
+        height: 40.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        onPressed: () {
+          if (isTapped) {
+            if (numberTapped == 1) {
+              // Navigator.push(
+              //     // EDIT: lesson1 -> lesson1
+              //     context,
+              //     MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
+              result = 1;
+              setState(() {
+              });
+            } else {
+              // Navigator.push(
+              //     // EDIT: lesson1 -> lesson1
+              //     context,
+              //     MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
+              result = 2;
+              setState(() {
+              });
+            }
           }
-        }
-      },
-      child: new Text(
-        'KIỂM TRA',
-        style: new TextStyle(fontSize: 20.0, color: Colors.white),
+        },
+        child: new Text(
+          'KIỂM TRA',
+          style: new TextStyle(fontSize: 20.0, color: Colors.white),
+        ),
       ),
     );
   }
@@ -188,19 +196,18 @@ class FalseCheckButton extends StatelessWidget {
     return Container(
       width: 400,
       height: 50,
-      //padding: EdgeInsets.all(2.0),
       child: Stack(
         children: <Widget>[
           new Positioned(
               top: -70,
               child: Container(
-                width: 420.0,
+                width: 500,
                 height: 150.0,
                 decoration: new BoxDecoration(
-                  color: Colors.redAccent[100],
+                  color: Colors.red[100],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: ListView(
                     children: [
                       Text(
@@ -218,7 +225,7 @@ class FalseCheckButton extends StatelessWidget {
                       Text(
                         'coffee',
                         style: new TextStyle(
-                          color: Colors.red[600],
+                          color: Colors.red[400],
                           fontSize: 20.0,
                         ),
                       ),
@@ -226,15 +233,16 @@ class FalseCheckButton extends StatelessWidget {
                   ),
                 ),
               )),
-          Column(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(1.0)),
-              Center(
+              Container(
+              margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+              child: Center(
                 child: MaterialButton(
-                  minWidth: 340.0,
-                  // color: isTapped ? Colors.green : Colors.grey,
+                  minWidth: 350.0,
                   color: Colors.red[600],
                   height: 40.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                   onPressed: () {
                     Navigator.push(
                         // EDIT: lesson1 -> lesson2
@@ -247,8 +255,7 @@ class FalseCheckButton extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
         ],
         overflow: Overflow.visible,
       ),
@@ -264,7 +271,7 @@ class RightCheckButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 500,
       height: 50,
       //padding: EdgeInsets.all(2.0),
       child: Stack(
@@ -272,15 +279,15 @@ class RightCheckButton extends StatelessWidget {
           new Positioned(
               top: -40,
               child: Container(
-                width: 420.0,
+                width: 500,
                 height: 120.0,
                 decoration: new BoxDecoration(
                   color: Colors.lightGreenAccent[100],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.only(left: 15.0, right: 0.0, top: 10, bottom: 0),
                   child: Text(
-                    'TUYỆT VỜI!',
+                    'TUYỆT QUÁ!',
                     style: new TextStyle(
                       color: Colors.lightGreenAccent[700],
                       fontSize: 20.0,
@@ -288,15 +295,18 @@ class RightCheckButton extends StatelessWidget {
                     ),
                   ),
                 ),
-              )),
-          Column(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(1.0)),
-              Center(
+              )
+            ),
+            Container(
+              margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+              child: Center(
                 child: MaterialButton(
-                  minWidth: 340.0,
+                  minWidth: 350.0,
                   color: Colors.lightGreenAccent[700],
                   height: 40.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                   onPressed: () {
                     Navigator.push(
                         // EDIT: lesson1 -> lesson2
@@ -309,8 +319,7 @@ class RightCheckButton extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
         ],
         overflow: Overflow.visible,
       ),
@@ -318,41 +327,3 @@ class RightCheckButton extends StatelessWidget {
   }
 }
 
-// class CheckButton extends StatelessWidget {
-//   const CheckButton({
-//     Key key,
-//     @required this.isTapped,
-//     @required this.numberTapped,
-//   }) : super(key: key);
-
-//   final bool isTapped;
-//   final int numberTapped;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialButton(
-//       minWidth: 350.0,
-//       color: isTapped ? Colors.green : Colors.grey,
-//       height: 40.0,
-//       onPressed: () {
-//         if (isTapped) {
-//           if (numberTapped == 1) {
-//             Navigator.push(
-//                 // EDIT: lesson1 -> lesson1
-//                 context,
-//                 MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
-//           } else {
-//             Navigator.push(
-//                 // EDIT: lesson1 -> lesson1
-//                 context,
-//                 MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
-//           }
-//         }
-//       },
-//       child: new Text(
-//         'KIỂM TRA',
-//         style: new TextStyle(fontSize: 20.0, color: Colors.white),
-//       ),
-//     );
-//   }
-// }

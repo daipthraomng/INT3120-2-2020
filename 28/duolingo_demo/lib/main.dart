@@ -1,3 +1,4 @@
+import 'package:duolingo_demo/screens/lesson1.dart';
 import 'package:duolingo_demo/screens/lesson2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Center(
-      child: Lesson2(),
+      child: Lesson1(),
     ));
   }
 }
