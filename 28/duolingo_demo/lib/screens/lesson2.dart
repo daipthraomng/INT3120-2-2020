@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'home.dart';
-import 'lesson2-FalseResult.dart';
-import 'lesson2-TrueResult.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Lesson2 extends StatefulWidget {

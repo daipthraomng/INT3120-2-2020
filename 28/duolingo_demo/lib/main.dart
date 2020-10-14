@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Center(
-      child: Lesson1(),
+      child: Home(),
     ));
   }
 }
