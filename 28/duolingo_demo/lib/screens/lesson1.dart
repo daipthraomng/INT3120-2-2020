@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duolingo_demo/screens/lesson2.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'package:firebase_image/firebase_image.dart';
 
 class Lesson1 extends StatefulWidget {
   @override
@@ -63,59 +65,65 @@ class _Lesson1State extends State<Lesson1> {
                   ),
                   Image.asset('assets/images/heart.png', height: 30),
                 ])),
-        body: new Container(
-          //margin: const EdgeInsets.all(10.0),
-          margin:EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: StreamBuilder(
+            // tạo luồng firebase tới collection 'lesson2'
+            stream:
+                FirebaseFirestore.instance.collection('lesson1').snapshots(),
+            // lấy dữ liệu từ firebase thông qua snapshot
+            builder: (context, snapshot) {
+              //if (!snapshot.hasData) return Text('Loading data...');
+              return createBody(
+                  snapshot.data.documents[0]['question'],
+                  snapshot.data.documents[0]['urlAnswer1'],
+                  snapshot.data.documents[0]['urlAnswer2'],
+                  snapshot.data.documents[0]['urlAnswer3'],
+                  snapshot.data.documents[0]['urlAnswer4']);
+            }));
+  }
+
+  Widget createBody(String question, String urlAnswer1, String urlAnswer2,
+      String urlAnswer3, String urlAnswer4) {
+    return new Container(
+      //margin: const EdgeInsets.all(10.0),
+      margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          // new Padding(padding: EdgeInsets.all(10.0)),
+          Container(
+            margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 10, bottom: 0),
+            alignment: Alignment.topLeft,
+            height: 30,
+            child: Text(
+              question,
+              style: new TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              // new Padding(padding: EdgeInsets.all(10.0)),
-              Container(
-                margin:EdgeInsets.only(left: 15.0, right: 0.0, top: 10, bottom: 0),
-                alignment: Alignment.topLeft,
-                height: 30,
-                child: Text(
-                  'Hình nào là "Cà Phê"?',
-                  style: new TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer(
-                      'assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG',
-                      1),
-                  answer(
-                      'assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG',
-                      2),
-                ],
-              ),
-              // new Padding(padding: EdgeInsets.all(5.0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer(
-                      'assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG',
-                      3),
-                  answer(
-                      'assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG',
-                      4),
-                ],
-              ),
-              //CheckButton(isTapped: isTapped, numberTapped: numberTapped),
-              if(result == 0)
-                CheckButton(),
-              if(result == 1)
-                RightCheckButton(),
-              if(result == 2)
-                FalseCheckButton(),
+              answer(urlAnswer1, 1),
+              answer(urlAnswer2, 2),
             ],
           ),
-        )
-      );
+          // new Padding(padding: EdgeInsets.all(5.0)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              answer(urlAnswer3, 3),
+              answer(urlAnswer4, 4),
+            ],
+          ),
+          //CheckButton(isTapped: isTapped, numberTapped: numberTapped),
+          if (result == 0) CheckButton(),
+          if (result == 1) RightCheckButton(),
+          if (result == 2) FalseCheckButton(),
+        ],
+      ),
+    );
   }
 
   Widget answer(String image, var number) {
@@ -141,14 +149,17 @@ class _Lesson1State extends State<Lesson1> {
               width: 2),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Image.asset(image, height: 190),
+        child: Image.network(
+          image,
+          height: 190,
+        ),
       ),
     );
   }
 
   Widget CheckButton() {
     return Container(
-      margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+      margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
       child: MaterialButton(
         minWidth: 340.0,
         color: isTapped ? Colors.green : Colors.grey,
@@ -164,16 +175,14 @@ class _Lesson1State extends State<Lesson1> {
               //     context,
               //     MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
               result = 1;
-              setState(() {
-              });
+              setState(() {});
             } else {
               // Navigator.push(
               //     // EDIT: lesson1 -> lesson1
               //     context,
               //     MaterialPageRoute(builder: (context) => Lesson1_FalseResult()));
               result = 2;
-              setState(() {
-              });
+              setState(() {});
             }
           }
         },
@@ -233,29 +242,29 @@ class FalseCheckButton extends StatelessWidget {
                   ),
                 ),
               )),
-              Container(
-              margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-              child: Center(
-                child: MaterialButton(
-                  minWidth: 350.0,
-                  color: Colors.red[600],
-                  height: 40.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
-                  },
-                  child: new Text(
-                    'TIẾP TỤC',
-                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
+          Container(
+            margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+            child: Center(
+              child: MaterialButton(
+                minWidth: 350.0,
+                color: Colors.red[600],
+                height: 40.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      // EDIT: lesson1 -> lesson2
+                      context,
+                      MaterialPageRoute(builder: (context) => Lesson2()));
+                },
+                child: new Text(
+                  'TIẾP TỤC',
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
               ),
             ),
+          ),
         ],
         overflow: Overflow.visible,
       ),
@@ -285,7 +294,8 @@ class RightCheckButton extends StatelessWidget {
                   color: Colors.lightGreenAccent[100],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 0.0, top: 10, bottom: 0),
+                  padding: EdgeInsets.only(
+                      left: 15.0, right: 0.0, top: 10, bottom: 0),
                   child: Text(
                     'TUYỆT QUÁ!',
                     style: new TextStyle(
@@ -295,35 +305,33 @@ class RightCheckButton extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
-            ),
-            Container(
-              margin:EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-              child: Center(
-                child: MaterialButton(
-                  minWidth: 350.0,
-                  color: Colors.lightGreenAccent[700],
-                  height: 40.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
-                  },
-                  child: new Text(
-                    'TIẾP TỤC',
-                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
+              )),
+          Container(
+            margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+            child: Center(
+              child: MaterialButton(
+                minWidth: 350.0,
+                color: Colors.lightGreenAccent[700],
+                height: 40.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      // EDIT: lesson1 -> lesson2
+                      context,
+                      MaterialPageRoute(builder: (context) => Lesson2()));
+                },
+                child: new Text(
+                  'TIẾP TỤC',
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
               ),
             ),
+          ),
         ],
         overflow: Overflow.visible,
       ),
     );
   }
 }
-
