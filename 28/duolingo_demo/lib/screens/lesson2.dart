@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'lesson2-FalseResult.dart';
 import 'lesson2-TrueResult.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Lesson2 extends StatefulWidget {
   @override
@@ -27,47 +28,60 @@ class _Lesson2State extends State<Lesson2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // thanh trạng thái, chứ nút thoát ra trang chủ chọn bài học,
-      // tiến độ làm bài và streak
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          elevation: 2,
-          title: Row(children: <Widget>[
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Home()));
-                },
-                child: Image.asset('assets/images/x_button.png', height: 25)),
-            SizedBox(
-              width: 20,
-            ),
-            Container(
-              child: Container(
-                height: 15,
-                width: 190,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: new Container(
+        // thanh trạng thái, chứ nút thoát ra trang chủ chọn bài học,
+        // tiến độ làm bài và streak
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            elevation: 2,
+            title: Row(children: <Widget>[
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
+                  child: Image.asset('assets/images/x_button.png', height: 25)),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                child: Container(
                   height: 15,
-                  width: 20,
-                  decoration: new BoxDecoration(
-                    color: Colors.green,
+                  width: 190,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: new Container(
+                    height: 15,
+                    width: 20,
+                    decoration: new BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Image.asset('assets/images/heart.png', height: 30),
-          ])),
-      body: body('Họ thích cà phê hơn.', 'They prefer coffee.',
-          'They prefer food.', 'They prefer juice.'),
-    );
+              SizedBox(
+                width: 20,
+              ),
+              Image.asset('assets/images/heart.png', height: 30),
+            ])),
+        body: StreamBuilder(
+            // tạo luồng firebase tới collection 'lesson2'
+            stream:
+                FirebaseFirestore.instance.collection('lesson2').snapshots(),
+            // lấy dữ liệu từ firebase thông qua snapshot
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Text('Loading data...');
+              return body(
+                  snapshot.data.documents[0]['question'],
+                  snapshot.data.documents[0]['answer1'],
+                  snapshot.data.documents[0]['answer2'],
+                  snapshot.data.documents[0]['answer3']);
+            })
+        // body('Họ thích cà phê hơn.', 'They prefer coffee.',
+        //     'They prefer food.', 'They prefer juice.'),
+        );
   }
 
   Widget body(String question, String answer1, String answer2, String answer3) {

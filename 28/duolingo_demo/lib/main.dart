@@ -1,20 +1,22 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:duolingo_demo/screens/lesson1-TrueResult.dart';
-import 'package:duolingo_demo/screens/lesson1.dart';
+import 'package:duolingo_demo/screens/lesson2.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_core/firebase_core.dart';
 import './screens/home.dart';
-//import './screens/lesson1.dart';
-import 'screens/home.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  // Khởi tạo firebase
+  // khi chạy phải 'flutter pub get'
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Center(
-      child: Home(),
+      child: Lesson2(),
     ));
   }
 }
