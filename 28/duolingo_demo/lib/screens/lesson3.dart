@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'lesson3.dart';
 
-class Lesson2 extends StatefulWidget {
+class Lesson3 extends StatefulWidget {
   final int indexQuestion;
 
-  const Lesson2({Key key, this.indexQuestion}) : super(key: key);
+  const Lesson3({Key key, this.indexQuestion}) : super(key: key);
   @override
-  _Lesson2State createState() => _Lesson2State();
+  _Lesson3State createState() => _Lesson3State();
 }
 
-class _Lesson2State extends State<Lesson2> {
+class _Lesson3State extends State<Lesson3> {
   bool isTapped;
   var numberTapped;
   // trang thai man hinh: 0 - chua kiem tra
@@ -49,7 +47,7 @@ class _Lesson2State extends State<Lesson2> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => new Lesson2(
+                                builder: (context) => new Lesson3(
                                       indexQuestion: 1,
                                     )));
                       },
@@ -85,10 +83,10 @@ class _Lesson2State extends State<Lesson2> {
             builder: (context, snapshot) {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
-                  snapshot.data.documents[0]['question'],
-                  snapshot.data.documents[0]['answer1'],
-                  snapshot.data.documents[0]['answer2'],
-                  snapshot.data.documents[0]['answer3']);
+                  snapshot.data.documents[1]['question'],
+                  snapshot.data.documents[1]['answer1'],
+                  snapshot.data.documents[1]['answer2'],
+                  snapshot.data.documents[1]['answer3']);
             })
         // body('Họ thích cà phê hơn.', 'They prefer coffee.',
         //     'They prefer food.', 'They prefer juice.'),
@@ -236,7 +234,7 @@ class _Lesson2State extends State<Lesson2> {
         ),
         onPressed: () {
           if (isTapped) {
-            if (numberTapped == 1) {
+            if (numberTapped == 2) {
               result = 1;
               setState(() {});
             } else {
@@ -291,7 +289,7 @@ class FalseCheckButton extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'They prefer coffee.',
+                        'They drink juice.',
                         style: new TextStyle(
                           color: Colors.red[400],
                           fontSize: 17.0,
