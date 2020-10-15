@@ -17,20 +17,20 @@ class _LevelsState extends State<Levels> {
             backgroundColor: Colors.white,
             elevation: 2,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-              Image.asset('assets/images/america.png', height: 25),
-              appBarItem('assets/images/crown.png', '0', Colors.grey),
-              appBarItem('assets/images/streak.png', '0', Colors.grey),
-              Image.asset('assets/images/heart.png', height: 30),
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: <Widget>[
-              //     Image.asset('assets/images/crown.png', height: 30),
-              //     Text('12'),
-              //   ],
-              // )
-            ])),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.asset('assets/images/america.jpg', height: 25),
+                  appBarItem('assets/images/crown.jpg', '0', Colors.grey),
+                  appBarItem('assets/images/streak.jpg', '0', Colors.grey),
+                  Image.asset('assets/images/heart.jpg', height: 30),
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: <Widget>[
+                  //     Image.asset('assets/images/crown.png', height: 30),
+                  //     Text('12'),
+                  //   ],
+                  // )
+                ])),
         body: Stack(
           alignment: Alignment.topRight,
           children: <Widget>[
