@@ -17,20 +17,20 @@ class _LevelsState extends State<Levels> {
             backgroundColor: Colors.white,
             elevation: 2,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-              Image.asset('assets/images/america.png', height: 25),
-              appBarItem('assets/images/crown.png', '0', Colors.grey),
-              appBarItem('assets/images/streak.png', '0', Colors.grey),
-              Image.asset('assets/images/heart.png', height: 30),
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: <Widget>[
-              //     Image.asset('assets/images/crown.png', height: 30),
-              //     Text('12'),
-              //   ],
-              // )
-            ])),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.asset('assets/images/america.jpg', height: 25),
+                  appBarItem('assets/images/crown.jpg', '0', Colors.grey),
+                  appBarItem('assets/images/streak.jpg', '0', Colors.grey),
+                  Image.asset('assets/images/heart.jpg', height: 30),
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: <Widget>[
+                  //     Image.asset('assets/images/crown.jpg', height: 30),
+                  //     Text('12'),
+                  //   ],
+                  // )
+                ])),
         body: Stack(
           alignment: Alignment.topRight,
           children: <Widget>[
@@ -39,37 +39,34 @@ class _LevelsState extends State<Levels> {
                 SizedBox(
                   height: 20,
                 ),
-                lesson(
-                  'assets/images/easter-egg.png',
-                  'Cơ bản 1',
-                  Colors.purple,
-                  'home1'
-                ),
+                lesson('assets/images/easter-egg.jpg', 'Cơ bản 1',
+                    Colors.purple, 'home1'),
                 SizedBox(
                   height: 20,
                 ),
                 twoLesson(
-                    lesson('assets/images/easter-egg-blocked.png', 'Cơ bản 2',
-                        Colors.grey[400], 'home2'), 
-                    lesson('assets/images/easter-egg-blocked.png', 'Cơ bản 3',
+                    lesson('assets/images/easter-egg-blocked.jpg', 'Cơ bản 2',
+                        Colors.grey[400], 'home2'),
+                    lesson('assets/images/easter-egg-blocked.jpg', 'Cơ bản 3',
                         Colors.grey[400], 'home3')),
                 SizedBox(
                   height: 20,
                 ),
-                lesson('assets/images/easter-egg-blocked.png', 'Cơ bản 4',
+                lesson('assets/images/easter-egg-blocked.jpg', 'Cơ bản 4',
                     Colors.grey[400], 'home4'),
                 SizedBox(
                   height: 20,
                 ),
                 twoLesson(
-                    lesson('assets/images/easter-egg-blocked.png', 'Cơ bản 5',
-                        Colors.grey[400], 'home5'),
-                    lesson('assets/images/easter-egg-blocked.png', 'Cơ bản 6',
-                        Colors.grey[400], 'home6'),),
+                  lesson('assets/images/easter-egg-blocked.jpg', 'Cơ bản 5',
+                      Colors.grey[400], 'home5'),
+                  lesson('assets/images/easter-egg-blocked.jpg', 'Cơ bản 6',
+                      Colors.grey[400], 'home6'),
+                ),
                 SizedBox(
                   height: 20,
                 ),
-                lesson('assets/images/easter-egg-blocked.png', 'Về đích',
+                lesson('assets/images/easter-egg-blocked.jpg', 'Về đích',
                     Colors.grey[400], 'home7'),
                 SizedBox(
                   height: 20,

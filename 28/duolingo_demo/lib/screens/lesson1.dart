@@ -53,7 +53,7 @@ class _Lesson1State extends State<Lesson1> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Home()));
                       },
-                      child: Image.asset('assets/images/x_button.png',
+                      child: Image.asset('assets/images/x_button.jpg',
                           height: 25)),
                   Stack(
                     children: <Widget>[
@@ -75,7 +75,7 @@ class _Lesson1State extends State<Lesson1> {
                       )
                     ],
                   ),
-                  Image.asset('assets/images/heart.png', height: 30),
+                  Image.asset('assets/images/heart.jpg', height: 30),
                 ])),
         body: StreamBuilder(
             // tạo luồng firebase tới collection 'lesson2'
