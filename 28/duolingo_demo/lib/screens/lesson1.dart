@@ -15,9 +15,21 @@ class Lesson1 extends StatefulWidget {
 class _Lesson1State extends State<Lesson1> {
   String homeIndex;
   _Lesson1State(this.homeIndex);
-  String collection;
-  var document = [];
+
+  String lesson; // lay ten cua bai hoc trong homeIndex
+  var question = []; // mang chua cac cau hoi trong 1 homeIndex
   
+  Future<String> getData() async {
+    final DocumentReference document =
+        Firestore.instance.collection("home").document(homeIndex);
+
+    await document.get().then<String>((DocumentSnapshot snapshot) async {
+      setState(() {
+        lesson = snapshot.data()['lesson1'];
+        question = lesson.split(" ").map((e) => int.parse(e)).toList();
+      });
+    });
+  }
 
   bool isTapped;
   var numberTapped;
@@ -33,9 +45,7 @@ class _Lesson1State extends State<Lesson1> {
     isTapped = false;
     numberTapped = 0;
     lastChecked = 0;
-    // collection = this.homeIndex.split("_")[0];
-    // document = this.homeIndex.split("_")[1];
-    collection = "lesson1";
+    getData();
   }
 
   @override
@@ -85,11 +95,11 @@ class _Lesson1State extends State<Lesson1> {
             builder: (context, snapshot) {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
-                  snapshot.data.documents[0]['question'],
-                  snapshot.data.documents[0]['urlAnswer1'],
-                  snapshot.data.documents[0]['urlAnswer2'],
-                  snapshot.data.documents[0]['urlAnswer3'],
-                  snapshot.data.documents[0]['urlAnswer4']);
+                  snapshot.data.documents[question[0]]['question'],
+                  snapshot.data.documents[question[0]]['urlAnswer1'],
+                  snapshot.data.documents[question[0]]['urlAnswer2'],
+                  snapshot.data.documents[question[0]]['urlAnswer3'],
+                  snapshot.data.documents[question[0]]['urlAnswer4']);
             }));
   }
 
@@ -180,7 +190,6 @@ class _Lesson1State extends State<Lesson1> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         onPressed: () {
-          print(homeIndex);
           if (isTapped) {
             if (numberTapped == 1) {
               // Navigator.push(
