@@ -47,9 +47,7 @@ class _Lesson3State extends State<Lesson3> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => new Lesson3(
-                                      indexQuestion: 1,
-                                    )));
+                                builder: (context) => new Home()));
                       },
                       child: Image.asset('assets/images/x_button.jpg',
                           height: 25)),

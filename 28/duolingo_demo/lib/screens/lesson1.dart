@@ -18,7 +18,9 @@ class _Lesson1State extends State<Lesson1> {
 
   String lesson; // lay ten cua bai hoc trong homeIndex
   var question = []; // mang chua cac cau hoi trong 1 homeIndex
-  
+  int countQuestion; // dem so cau hoi cung dang bai
+  int process; // tien do hoan thanh
+
   Future<String> getData() async {
     final DocumentReference document =
         Firestore.instance.collection("home").document(homeIndex);
@@ -45,6 +47,8 @@ class _Lesson1State extends State<Lesson1> {
     isTapped = false;
     numberTapped = 0;
     lastChecked = 0;
+    countQuestion = 0;
+    process = 0;
     getData();
   }
 
@@ -77,7 +81,7 @@ class _Lesson1State extends State<Lesson1> {
                       ),
                       Container(
                         height: 15,
-                        width: 210 / 8,
+                        width: 216 / 12 * countQuestion,
                         decoration: new BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(10.0),
@@ -95,11 +99,11 @@ class _Lesson1State extends State<Lesson1> {
             builder: (context, snapshot) {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
-                  snapshot.data.documents[question[0]]['question'],
-                  snapshot.data.documents[question[0]]['urlAnswer1'],
-                  snapshot.data.documents[question[0]]['urlAnswer2'],
-                  snapshot.data.documents[question[0]]['urlAnswer3'],
-                  snapshot.data.documents[question[0]]['urlAnswer4']);
+                  snapshot.data.documents[countQuestion]['question'],
+                  snapshot.data.documents[countQuestion]['urlAnswer1'],
+                  snapshot.data.documents[countQuestion]['urlAnswer2'],
+                  snapshot.data.documents[countQuestion]['urlAnswer3'],
+                  snapshot.data.documents[countQuestion]['urlAnswer4']);
             }));
   }
 
@@ -215,15 +219,8 @@ class _Lesson1State extends State<Lesson1> {
       ),
     );
   }
-}
 
-class FalseCheckButton extends StatelessWidget {
-  const FalseCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget FalseCheckButton() {
     return Container(
       width: 400,
       height: 50,
@@ -275,10 +272,18 @@ class FalseCheckButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      // EDIT: lesson1 -> lesson2
-                      context,
-                      MaterialPageRoute(builder: (context) => Lesson2()));
+                  if (countQuestion < 2) {
+                    countQuestion++;
+                    result = 0;
+                    isTapped = false;
+                    isChecked = [false, false, false, false];
+                    setState(() {});
+                  } else {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                  }
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -292,15 +297,8 @@ class FalseCheckButton extends StatelessWidget {
       ),
     );
   }
-}
 
-class RightCheckButton extends StatelessWidget {
-  const RightCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget RightCheckButton() {
     return Container(
       width: 500,
       height: 50,
@@ -339,10 +337,18 @@ class RightCheckButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      // EDIT: lesson1 -> lesson2
-                      context,
-                      MaterialPageRoute(builder: (context) => Lesson2()));
+                  if (countQuestion < 2) {
+                    countQuestion++;
+                    result = 0;
+                    isTapped = false;
+                    isChecked = [false, false, false, false];
+                    setState(() {});
+                  } else {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                  }
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -357,3 +363,144 @@ class RightCheckButton extends StatelessWidget {
     );
   }
 }
+
+// class FalseCheckButton extends StatelessWidget {
+//   const FalseCheckButton({
+//     Key key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 400,
+//       height: 50,
+//       child: Stack(
+//         children: <Widget>[
+//           new Positioned(
+//               top: -70,
+//               child: Container(
+//                 width: 500,
+//                 height: 150.0,
+//                 decoration: new BoxDecoration(
+//                   color: Colors.red[100],
+//                 ),
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(15.0),
+//                   child: ListView(
+//                     children: [
+//                       Text(
+//                         'ĐÁP ÁN ĐÚNG:',
+//                         textAlign: TextAlign.left,
+//                         style: new TextStyle(
+//                           color: Colors.red[600],
+//                           fontSize: 20.0,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 5,
+//                       ),
+//                       Text(
+//                         'coffee',
+//                         style: new TextStyle(
+//                           color: Colors.red[400],
+//                           fontSize: 20.0,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               )),
+//           Container(
+//             margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+//             child: Center(
+//               child: MaterialButton(
+//                 minWidth: 350.0,
+//                 color: Colors.red[600],
+//                 height: 40.0,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(10.0),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.push(
+//                       // EDIT: lesson1 -> lesson2
+//                       context,
+//                       MaterialPageRoute(builder: (context) => Lesson2()));
+//                 },
+//                 child: new Text(
+//                   'TIẾP TỤC',
+//                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//         overflow: Overflow.visible,
+//       ),
+//     );
+//   }
+// }
+
+// class RightCheckButton extends StatelessWidget {
+//   const RightCheckButton({
+//     Key key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 500,
+//       height: 50,
+//       //padding: EdgeInsets.all(2.0),
+//       child: Stack(
+//         children: <Widget>[
+//           new Positioned(
+//               top: -40,
+//               child: Container(
+//                 width: 500,
+//                 height: 120.0,
+//                 decoration: new BoxDecoration(
+//                   color: Colors.lightGreenAccent[100],
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.only(
+//                       left: 15.0, right: 0.0, top: 10, bottom: 0),
+//                   child: Text(
+//                     'TUYỆT QUÁ!',
+//                     style: new TextStyle(
+//                       color: Colors.lightGreenAccent[700],
+//                       fontSize: 20.0,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ),
+//               )),
+//           Container(
+//             margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+//             child: Center(
+//               child: MaterialButton(
+//                 minWidth: 350.0,
+//                 color: Colors.lightGreenAccent[700],
+//                 height: 40.0,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(10.0),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.push(
+//                       // EDIT: lesson1 -> lesson2
+//                       context,
+//                       MaterialPageRoute(builder: (context) => Lesson2()));
+//                 },
+//                 child: new Text(
+//                   'TIẾP TỤC',
+//                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//         overflow: Overflow.visible,
+//       ),
+//     );
+//   }
+// }
