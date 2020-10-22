@@ -53,7 +53,7 @@ class _Lesson2State extends State<Lesson2> {
                                       indexQuestion: 1,
                                     )));
                       },
-                      child: Image.asset('assets/images/x_button.jpg',
+                      child: Image.asset('assets/images/x_button.png',
                           height: 25)),
                   Stack(
                     children: <Widget>[
@@ -75,7 +75,7 @@ class _Lesson2State extends State<Lesson2> {
                       )
                     ],
                   ),
-                  Image.asset('assets/images/heart.jpg', height: 30),
+                  Image.asset('assets/images/heart.png', height: 30),
                 ])),
         body: StreamBuilder(
             // tạo luồng firebase tới collection 'lesson2'

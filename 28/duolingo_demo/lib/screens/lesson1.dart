@@ -1,15 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duolingo_demo/screens/lesson2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'package:firebase_image/firebase_image.dart';
 
 class Lesson1 extends StatefulWidget {
+  String homeIndex;
+  Lesson1(this.homeIndex);
   @override
-  _Lesson1State createState() => _Lesson1State();
+  _Lesson1State createState() => _Lesson1State(homeIndex);
 }
 
 class _Lesson1State extends State<Lesson1> {
+  String homeIndex;
+  _Lesson1State(this.homeIndex);
+  String collection;
+  var document = [];
+  
+
   bool isTapped;
   var numberTapped;
   int result; // var dung trong body de hien thi widget button nao.
@@ -24,6 +33,9 @@ class _Lesson1State extends State<Lesson1> {
     isTapped = false;
     numberTapped = 0;
     lastChecked = 0;
+    // collection = this.homeIndex.split("_")[0];
+    // document = this.homeIndex.split("_")[1];
+    collection = "lesson1";
   }
 
   @override
@@ -41,7 +53,7 @@ class _Lesson1State extends State<Lesson1> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Home()));
                       },
-                      child: Image.asset('assets/images/x_button.jpg',
+                      child: Image.asset('assets/images/x_button.png',
                           height: 25)),
                   Stack(
                     children: <Widget>[
@@ -63,7 +75,7 @@ class _Lesson1State extends State<Lesson1> {
                       )
                     ],
                   ),
-                  Image.asset('assets/images/heart.jpg', height: 30),
+                  Image.asset('assets/images/heart.png', height: 30),
                 ])),
         body: StreamBuilder(
             // tạo luồng firebase tới collection 'lesson2'
@@ -168,6 +180,7 @@ class _Lesson1State extends State<Lesson1> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         onPressed: () {
+          print(homeIndex);
           if (isTapped) {
             if (numberTapped == 1) {
               // Navigator.push(
