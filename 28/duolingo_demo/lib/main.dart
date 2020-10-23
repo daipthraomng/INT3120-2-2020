@@ -1,6 +1,4 @@
-import 'package:duolingo_demo/screens/lesson1.dart';
-import 'package:duolingo_demo/screens/lesson2.dart';
-import 'package:duolingo_demo/screens/lesson3.dart';
+import 'package:duolingo_demo/screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import './screens/home.dart';

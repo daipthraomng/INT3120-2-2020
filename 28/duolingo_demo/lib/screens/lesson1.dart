@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:duolingo_demo/screens/lesson2.dart';
-import 'package:flutter/foundation.dart';
+import 'package:duolingo_demo/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'package:firebase_image/firebase_image.dart';
 
+// ignore: must_be_immutable
 class Lesson1 extends StatefulWidget {
   String homeIndex;
   Lesson1(this.homeIndex);
@@ -19,12 +17,18 @@ class _Lesson1State extends State<Lesson1> {
   String lesson; // lay ten cua bai hoc trong homeIndex
   var question = []; // mang chua cac cau hoi trong 1 homeIndex
   int countQuestion; // dem so cau hoi cung dang bai
+  String resultText;
   int process; // tien do hoan thanh
+  static const int totalQuestionLesson1 = 2;
+  static const int totalQuestionOfLesson = 8;
 
+  // ignore: missing_return
   Future<String> getData() async {
     final DocumentReference document =
-        Firestore.instance.collection("home").document(homeIndex);
+        // ignore: deprecated_member_use
+        FirebaseFirestore.instance.collection("home").document(homeIndex);
 
+    // ignore: missing_return
     await document.get().then<String>((DocumentSnapshot snapshot) async {
       setState(() {
         lesson = snapshot.data()['lesson1'];
@@ -49,6 +53,7 @@ class _Lesson1State extends State<Lesson1> {
     lastChecked = 0;
     countQuestion = 0;
     process = 0;
+    resultText = "";
     getData();
   }
 
@@ -81,7 +86,7 @@ class _Lesson1State extends State<Lesson1> {
                       ),
                       Container(
                         height: 15,
-                        width: 216 / 12 * countQuestion,
+                        width: 216 / totalQuestionOfLesson * countQuestion,
                         decoration: new BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(10.0),
@@ -99,16 +104,23 @@ class _Lesson1State extends State<Lesson1> {
             builder: (context, snapshot) {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
-                  snapshot.data.documents[countQuestion]['question'],
-                  snapshot.data.documents[countQuestion]['urlAnswer1'],
-                  snapshot.data.documents[countQuestion]['urlAnswer2'],
-                  snapshot.data.documents[countQuestion]['urlAnswer3'],
-                  snapshot.data.documents[countQuestion]['urlAnswer4']);
+                  snapshot.data.documents[question[countQuestion]]['question'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['resultText'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['urlAnswer1'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['urlAnswer2'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['urlAnswer3'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['urlAnswer4']);
             }));
   }
 
-  Widget createBody(String question, String urlAnswer1, String urlAnswer2,
-      String urlAnswer3, String urlAnswer4) {
+  Widget createBody(String question, String resultTextData, String urlAnswer1,
+      String urlAnswer2, String urlAnswer3, String urlAnswer4) {
+    resultText = resultTextData;
     return new Container(
       //margin: const EdgeInsets.all(10.0),
       margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
@@ -143,10 +155,10 @@ class _Lesson1State extends State<Lesson1> {
               answer(urlAnswer4, 4),
             ],
           ),
-          //CheckButton(isTapped: isTapped, numberTapped: numberTapped),
-          if (result == 0) CheckButton(),
-          if (result == 1) RightCheckButton(),
-          if (result == 2) FalseCheckButton(),
+          //checkButton(isTapped: isTapped, numberTapped: numberTapped),
+          if (result == 0) checkButton(),
+          if (result == 1) rightCheckButton(),
+          if (result == 2) falseCheckButton(),
         ],
       ),
     );
@@ -183,7 +195,7 @@ class _Lesson1State extends State<Lesson1> {
     );
   }
 
-  Widget CheckButton() {
+  Widget checkButton() {
     return Container(
       margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
       child: MaterialButton(
@@ -220,7 +232,7 @@ class _Lesson1State extends State<Lesson1> {
     );
   }
 
-  Widget FalseCheckButton() {
+  Widget falseCheckButton() {
     return Container(
       width: 400,
       height: 50,
@@ -251,7 +263,7 @@ class _Lesson1State extends State<Lesson1> {
                         height: 5,
                       ),
                       Text(
-                        'coffee',
+                        resultText,
                         style: new TextStyle(
                           color: Colors.red[400],
                           fontSize: 20.0,
@@ -272,7 +284,7 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < 2) {
+                  if (countQuestion < totalQuestionLesson1 - 1) {
                     countQuestion++;
                     result = 0;
                     isTapped = false;
@@ -298,7 +310,7 @@ class _Lesson1State extends State<Lesson1> {
     );
   }
 
-  Widget RightCheckButton() {
+  Widget rightCheckButton() {
     return Container(
       width: 500,
       height: 50,
@@ -337,7 +349,7 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < 2) {
+                  if (countQuestion < totalQuestionLesson1 - 1) {
                     countQuestion++;
                     result = 0;
                     isTapped = false;
@@ -364,8 +376,8 @@ class _Lesson1State extends State<Lesson1> {
   }
 }
 
-// class FalseCheckButton extends StatelessWidget {
-//   const FalseCheckButton({
+// class falseCheckButton extends StatelessWidget {
+//   const falseCheckButton({
 //     Key key,
 //   }) : super(key: key);
 
@@ -441,8 +453,8 @@ class _Lesson1State extends State<Lesson1> {
 //   }
 // }
 
-// class RightCheckButton extends StatelessWidget {
-//   const RightCheckButton({
+// class rightCheckButton extends StatelessWidget {
+//   const rightCheckButton({
 //     Key key,
 //   }) : super(key: key);
 

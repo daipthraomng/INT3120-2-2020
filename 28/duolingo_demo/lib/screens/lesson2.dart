@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'lesson3.dart';
+import 'package:duolingo_demo/screens/screens.dart';
 
 class Lesson2 extends StatefulWidget {
   final int indexQuestion;
@@ -23,6 +21,14 @@ class _Lesson2State extends State<Lesson2> {
   var lastChecked;
   int index; // chi so cua cau hoi
 
+  String lesson; // lay ten cua bai hoc trong homeIndex
+  var question = []; // mang chua cac cau hoi trong 1 homeIndex
+  int countQuestion; // dem so cau hoi cung dang bai
+  int process; // tien do hoan thanh
+  String resultText; // dap an dang text
+  static const int totalQuestionLesson2 = 2;
+  static const int totalQuestionOfLesson = 8;
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +36,10 @@ class _Lesson2State extends State<Lesson2> {
     result = 0;
     numberTapped = 0; // chi so cua o duoc an
     lastChecked = 0;
+    countQuestion = 0;
+    process = 3;
+    resultText = "";
+    getData();
   }
 
   @override
@@ -65,7 +75,7 @@ class _Lesson2State extends State<Lesson2> {
                       ),
                       Container(
                         height: 15,
-                        width: 2 * 210 / 8,
+                        width: 216 / totalQuestionOfLesson * countQuestion,
                         decoration: new BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(10.0),
@@ -83,18 +93,38 @@ class _Lesson2State extends State<Lesson2> {
             builder: (context, snapshot) {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
-                  snapshot.data.documents[0]['question'],
-                  snapshot.data.documents[0]['answer1'],
-                  snapshot.data.documents[0]['answer2'],
-                  snapshot.data.documents[0]['answer3']);
+                  snapshot.data.documents[question[countQuestion]]['question'],
+                  //snapshot.data.documents[question[countQuestion]]['result'],
+                  snapshot.data.documents[question[countQuestion]]
+                      ['resultText'],
+                  snapshot.data.documents[question[countQuestion]]['answer1'],
+                  snapshot.data.documents[question[countQuestion]]['answer2'],
+                  snapshot.data.documents[question[countQuestion]]['answer3']);
             })
         // body('Họ thích cà phê hơn.', 'They prefer coffee.',
         //     'They prefer food.', 'They prefer juice.'),
         );
   }
 
-  Widget createBody(
-      String question, String answer1, String answer2, String answer3) {
+  // ignore: missing_return
+  Future<String> getData() async {
+    final DocumentReference document =
+        // ignore: deprecated_member_use
+        FirebaseFirestore.instance.collection("home").document('home1');
+
+    // ignore: missing_return
+    await document.get().then<String>((DocumentSnapshot snapshot) async {
+      setState(() {
+        lesson = snapshot.data()['lesson2'];
+        question = lesson.split(" ").map((e) => int.parse(e)).toList();
+      });
+    });
+  }
+
+  Widget createBody(String question, String resultTextData, String answer1,
+      String answer2, String answer3) {
+    //result = int.parse(resultInt);
+    resultText = resultTextData;
     return Container(
       margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
       child: Column(
@@ -175,9 +205,9 @@ class _Lesson2State extends State<Lesson2> {
           //     style: new TextStyle(fontSize: 20.0, color: Colors.white),
           //   ),
           // ),
-          if (result == 0) CheckButton(),
-          if (result == 1) RightCheckButton(),
-          if (result == 2) FalseCheckButton(),
+          if (result == 0) checkButton(),
+          if (result == 1) rightCheckButton(),
+          if (result == 2) falseCheckButton(),
         ],
       ),
     );
@@ -222,7 +252,7 @@ class _Lesson2State extends State<Lesson2> {
     );
   }
 
-  Widget CheckButton() {
+  Widget checkButton() {
     return Container(
       margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
       child: MaterialButton(
@@ -250,15 +280,8 @@ class _Lesson2State extends State<Lesson2> {
       ),
     );
   }
-}
 
-class FalseCheckButton extends StatelessWidget {
-  const FalseCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget falseCheckButton() {
     return Container(
       width: 400,
       height: 50,
@@ -289,7 +312,7 @@ class FalseCheckButton extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'They prefer coffee.',
+                        resultText,
                         style: new TextStyle(
                           color: Colors.red[400],
                           fontSize: 17.0,
@@ -310,10 +333,18 @@ class FalseCheckButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      // EDIT: lesson1 -> lesson2
-                      context,
-                      MaterialPageRoute(builder: (context) => Lesson3()));
+                  if (countQuestion < totalQuestionLesson2 - 1) {
+                    countQuestion++;
+                    result = 0;
+                    isTapped = false;
+                    isChecked = [false, false, false];
+                    setState(() {});
+                  } else {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson3()));
+                  }
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -327,15 +358,8 @@ class FalseCheckButton extends StatelessWidget {
       ),
     );
   }
-}
 
-class RightCheckButton extends StatelessWidget {
-  const RightCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget rightCheckButton() {
     return Container(
       width: 500,
       height: 50,
@@ -374,10 +398,18 @@ class RightCheckButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      // EDIT: lesson1 -> lesson2
-                      context,
-                      MaterialPageRoute(builder: (context) => Lesson3()));
+                  if (countQuestion < totalQuestionLesson2 - 1) {
+                    countQuestion++;
+                    result = 0;
+                    isTapped = false;
+                    isChecked = [false, false, false];
+                    setState(() {});
+                  } else {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson3()));
+                  }
                 },
                 child: new Text(
                   'TIẾP TỤC',

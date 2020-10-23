@@ -173,9 +173,9 @@ class _Lesson3State extends State<Lesson3> {
           //     style: new TextStyle(fontSize: 20.0, color: Colors.white),
           //   ),
           // ),
-          if (result == 0) CheckButton(),
-          if (result == 1) RightCheckButton(),
-          if (result == 2) FalseCheckButton(),
+          if (result == 0) checkButton(),
+          if (result == 1) rightCheckButton(),
+          if (result == 2) falseCheckButton(),
         ],
       ),
     );
@@ -220,7 +220,7 @@ class _Lesson3State extends State<Lesson3> {
     );
   }
 
-  Widget CheckButton() {
+  Widget checkButton() {
     return Container(
       margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
       child: MaterialButton(
@@ -248,15 +248,8 @@ class _Lesson3State extends State<Lesson3> {
       ),
     );
   }
-}
 
-class FalseCheckButton extends StatelessWidget {
-  const FalseCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget falseCheckButton() {
     return Container(
       width: 400,
       height: 50,
@@ -287,7 +280,7 @@ class FalseCheckButton extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'They drink juice.',
+                        'They prefer coffee.',
                         style: new TextStyle(
                           color: Colors.red[400],
                           fontSize: 17.0,
@@ -325,15 +318,8 @@ class FalseCheckButton extends StatelessWidget {
       ),
     );
   }
-}
 
-class RightCheckButton extends StatelessWidget {
-  const RightCheckButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget rightCheckButton() {
     return Container(
       width: 500,
       height: 50,

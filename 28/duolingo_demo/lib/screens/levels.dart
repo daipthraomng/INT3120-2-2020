@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'lesson1.dart';
-import 'lesson2.dart';
+import 'package:duolingo_demo/screens/screens.dart';
 
 class Levels extends StatefulWidget {
   @override
