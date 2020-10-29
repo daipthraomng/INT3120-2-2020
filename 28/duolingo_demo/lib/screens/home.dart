@@ -15,7 +15,8 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         items: [
-          navBarItem('assets/images/home-clicked.jpg', 'assets/images/home-clicked.jpg'),
+          navBarItem('assets/images/home-clicked.jpg',
+              'assets/images/home-clicked.jpg'),
           navBarItem('assets/images/info.jpg', 'assets/images/info.jpg'),
           navBarItem('assets/images/rank.jpg', 'assets/images/rank.jpg'),
           navBarItem('assets/images/store.jpg', 'assets/images/store.jpg'),
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
   BottomNavigationBarItem navBarItem(String image, String activeImage) {
     return BottomNavigationBarItem(
       icon: Image.asset(image, height: 30),
+      // ignore: deprecated_member_use
       title: Container(),
       activeIcon: Image.asset(activeImage),
     );
