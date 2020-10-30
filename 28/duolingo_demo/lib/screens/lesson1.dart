@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Lesson1 extends StatefulWidget {
+  String lesson;
   String homeIndex;
-  Lesson1(this.homeIndex);
+  Lesson1(this.lesson, this.homeIndex);
   @override
-  _Lesson1State createState() => _Lesson1State(homeIndex);
+  _Lesson1State createState() => _Lesson1State(lesson, homeIndex);
 }
 
 class _Lesson1State extends State<Lesson1> {
-  String homeIndex;
-  _Lesson1State(this.homeIndex);
+  _Lesson1State(this.lesson, this.homeIndex);
 
+  String homeIndex;
   String lesson; // lay ten cua bai hoc trong homeIndex
   var question = []; // mang chua cac cau hoi trong 1 homeIndex
   int countQuestion; // dem so cau hoi cung dang bai
@@ -23,19 +24,19 @@ class _Lesson1State extends State<Lesson1> {
   static const int totalQuestionOfLesson = 8;
 
   // ignore: missing_return
-  Future<String> getData() async {
-    final DocumentReference document =
-        // ignore: deprecated_member_use
-        FirebaseFirestore.instance.collection("home").document(homeIndex);
+  // Future<String> getData() async {
+  //   final DocumentReference document =
+  //       // ignore: deprecated_member_use
+  //       FirebaseFirestore.instance.collection("home").document(homeIndex);
 
-    // ignore: missing_return
-    await document.get().then<String>((DocumentSnapshot snapshot) async {
-      setState(() {
-        lesson = snapshot.data()['lesson1'];
-        question = lesson.split(" ").map((e) => int.parse(e)).toList();
-      });
-    });
-  }
+  //   // ignore: missing_return
+  //   await document.get().then<String>((DocumentSnapshot snapshot) async {
+  //     setState(() {
+  //       lesson = snapshot.data()['lesson1'];
+  //       question = lesson.split(" ").map((e) => int.parse(e)).toList();
+  //     });
+  //   });
+  // }
 
   bool isTapped;
   var numberTapped;
@@ -47,6 +48,7 @@ class _Lesson1State extends State<Lesson1> {
   @override
   void initState() {
     super.initState();
+    question = lesson.split(" ").map((e) => int.parse(e)).toList();
     result = 0;
     isTapped = false;
     numberTapped = 0;
@@ -54,7 +56,6 @@ class _Lesson1State extends State<Lesson1> {
     countQuestion = 0;
     process = 0;
     resultText = "";
-    getData();
   }
 
   @override
@@ -284,17 +285,19 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < totalQuestionLesson1 - 1) {
+                  print(countQuestion);
+                  if (countQuestion == totalQuestionLesson1 - 1) {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                    // Future.delayed(const Duration(milliseconds: 200));
+                  } else if (countQuestion == 0) {
                     countQuestion++;
                     result = 0;
                     isTapped = false;
                     isChecked = [false, false, false, false];
                     setState(() {});
-                  } else {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
                   }
                 },
                 child: new Text(
@@ -349,17 +352,19 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < totalQuestionLesson1 - 1) {
+                  print(countQuestion);
+                  if (countQuestion == totalQuestionLesson1 - 1) {
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson2
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                    // Future.delayed(const Duration(milliseconds: 200));
+                  } else if (countQuestion == 0) {
                     countQuestion++;
                     result = 0;
                     isTapped = false;
                     isChecked = [false, false, false, false];
                     setState(() {});
-                  } else {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
                   }
                 },
                 child: new Text(

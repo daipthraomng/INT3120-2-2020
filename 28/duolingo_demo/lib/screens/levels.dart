@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:duolingo_demo/screens/screens.dart';
 
 class Levels extends StatefulWidget {
@@ -96,10 +96,24 @@ class _LevelsState extends State<Levels> {
   Widget lesson(String image, String title, Color color, String homeIndex) {
     return GestureDetector(
         onTap: () {
-          Navigator.push(
-              // EDIT: lesson1 -> lesson1
-              context,
-              MaterialPageRoute(builder: (context) => Lesson1(homeIndex)));
+          String lesson;
+          FirebaseFirestore.instance
+              .collection('home')
+              .doc(homeIndex)
+              .get()
+              .then((DocumentSnapshot snapshot) {
+            if (snapshot.exists) {
+              print('Document exists on the database');
+              lesson = snapshot.data()['lesson1'];
+              // print(lesson);
+            }
+          });
+          Future.delayed(const Duration(milliseconds: 700), () {
+            Navigator.push(
+                // EDIT: lesson1 -> lesson1
+                context,
+                MaterialPageRoute(builder: (context) => Lesson1(lesson, homeIndex)));
+          });
         },
         child: Column(
           children: <Widget>[

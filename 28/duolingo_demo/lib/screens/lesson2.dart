@@ -4,6 +4,7 @@ import 'package:duolingo_demo/screens/screens.dart';
 
 class Lesson2 extends StatefulWidget {
   final int indexQuestion;
+  // String homeIndex;
 
   const Lesson2({Key key, this.indexQuestion}) : super(key: key);
   @override
