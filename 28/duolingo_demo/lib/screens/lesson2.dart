@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duolingo_demo/screens/screens.dart';
 
+// ignore: must_be_immutable
 class Lesson2 extends StatefulWidget {
   String lesson;
   String homeIndex;
@@ -38,7 +39,7 @@ class _Lesson2State extends State<Lesson2> {
   @override
   void initState() {
     super.initState();
-    question = lesson.split(" ").map((e) => int.parse(e)).toList();
+    question = [0, 1];
     isTapped = false;
     result = 0;
     numberTapped = 0; // chi so cua o duoc an
@@ -193,41 +194,80 @@ class _Lesson2State extends State<Lesson2> {
 
   // tạo nội dung cho các ô đáp án, xử lý sự kiện khi ô được chọn
   Widget answer(String answer, var number) {
-    return GestureDetector(
-      // hàm xử lý sự kiện chọn ô
-      onTap: () {
-        setState(() {
-          if (lastChecked != 0) {
-            isChecked[lastChecked - 1] = false;
-          }
-          isTapped = true;
-          numberTapped = number;
-          lastChecked = number;
-          isChecked[number - 1] = true;
-        });
-      },
-      child: Container(
-        height: 40,
-        width: 350,
-        margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-        decoration: new BoxDecoration(
-          color: isChecked[number - 1] ? Colors.blue[100] : Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-              color: isChecked[number - 1] ? Colors.blue : Colors.grey,
-              width: 2),
-        ),
+    if (number == 1) {
+      return GestureDetector(
+        key: const ValueKey('answer1'),
+        // hàm xử lý sự kiện chọn ô
+        onTap: () {
+          setState(() {
+            if (lastChecked != 0) {
+              isChecked[lastChecked - 1] = false;
+            }
+            isTapped = true;
+            numberTapped = number;
+            lastChecked = number;
+            isChecked[number - 1] = true;
+          });
+        },
+        child: Container(
+          height: 40,
+          width: 350,
+          margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+          decoration: new BoxDecoration(
+            color: isChecked[number - 1] ? Colors.blue[100] : Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+                color: isChecked[number - 1] ? Colors.blue : Colors.grey,
+                width: 2),
+          ),
 
-        // thêm nội dung, định dạng text trong các ô đáp án
-        child: Center(
-          child: new Text(
-            answer,
-            style: new TextStyle(fontSize: 18.0, color: Colors.black),
-            textAlign: TextAlign.center,
+          // thêm nội dung, định dạng text trong các ô đáp án
+          child: Center(
+            child: new Text(
+              answer,
+              style: new TextStyle(fontSize: 18.0, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return GestureDetector(
+        // hàm xử lý sự kiện chọn ô
+        onTap: () {
+          setState(() {
+            if (lastChecked != 0) {
+              isChecked[lastChecked - 1] = false;
+            }
+            isTapped = true;
+            numberTapped = number;
+            lastChecked = number;
+            isChecked[number - 1] = true;
+          });
+        },
+        child: Container(
+          height: 40,
+          width: 350,
+          margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
+          decoration: new BoxDecoration(
+            color: isChecked[number - 1] ? Colors.blue[100] : Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+                color: isChecked[number - 1] ? Colors.blue : Colors.grey,
+                width: 2),
+          ),
+
+          // thêm nội dung, định dạng text trong các ô đáp án
+          child: Center(
+            child: new Text(
+              answer,
+              style: new TextStyle(fontSize: 18.0, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   Widget checkButton() {
@@ -322,7 +362,7 @@ class _Lesson2State extends State<Lesson2> {
                     Navigator.push(
                         // EDIT: lesson1 -> lesson2
                         context,
-                        MaterialPageRoute(builder: (context) => Lesson3()));
+                        MaterialPageRoute(builder: (context) => Home()));
                   }
                 },
                 child: new Text(
@@ -387,7 +427,7 @@ class _Lesson2State extends State<Lesson2> {
                     Navigator.push(
                         // EDIT: lesson1 -> lesson2
                         context,
-                        MaterialPageRoute(builder: (context) => Lesson3()));
+                        MaterialPageRoute(builder: (context) => Home()));
                   }
                 },
                 child: new Text(

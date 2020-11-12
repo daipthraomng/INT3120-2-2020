@@ -94,67 +94,197 @@ class _LevelsState extends State<Levels> {
   }
 
   Widget lesson(String image, String title, Color color, String homeIndex) {
-    return GestureDetector(
-        onTap: () {
-          String lesson;
-          FirebaseFirestore.instance
-              .collection('home')
-              .doc(homeIndex)
-              .get()
-              .then((DocumentSnapshot snapshot) {
-            if (snapshot.exists) {
-              print('Document exists on the database');
-              lesson = snapshot.data()['lesson1'];
-              // print(lesson);
-            }
-          });
-          Future.delayed(const Duration(milliseconds: 700), () {
-            Navigator.push(
-                // EDIT: lesson1 -> lesson1
-                context,
-                MaterialPageRoute(builder: (context) => Lesson1(lesson, homeIndex)));
-          });
-        },
-        child: Column(
-          children: <Widget>[
-            // biểu tượng bài học đầu
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                // Transform.rotate(
-                //   angle: 0,
-                //   child: CircularProgressIndicator(
-                //     backgroundColor: Colors.grey[300],
-                //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
-                //     value: .2,
-                //     strokeWidth: 45,
-                //   ),
-                // ),
-                CircleAvatar(
-                  backgroundColor: Colors.grey[350],
-                  radius: 40,
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.grey[300],
-                  radius: 35,
-                ),
-                CircleAvatar(
-                  child: Image.asset(
-                    image,
-                    height: 50,
+    if (homeIndex == "home1")
+      return GestureDetector(
+          key: const ValueKey("home1"),
+          onTap: () {
+            String lesson;
+            FirebaseFirestore.instance
+                .collection('home')
+                .doc(homeIndex)
+                .get()
+                .then((DocumentSnapshot snapshot) {
+              if (snapshot.exists) {
+                print('Document exists on the database');
+                lesson = snapshot.data()['lesson1'];
+                // print(lesson);
+              }
+            });
+            Future.delayed(const Duration(milliseconds: 700), () {
+              Navigator.push(
+                  // EDIT: lesson1 -> lesson1
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Lesson1(lesson, homeIndex)));
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              // biểu tượng bài học đầu
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  // Transform.rotate(
+                  //   angle: 0,
+                  //   child: CircularProgressIndicator(
+                  //     backgroundColor: Colors.grey[300],
+                  //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
+                  //     value: .2,
+                  //     strokeWidth: 45,
+                  //   ),
+                  // ),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 40,
                   ),
-                  radius: 30,
-                  backgroundColor: color,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
-          ],
-        ));
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[300],
+                    radius: 35,
+                  ),
+                  CircleAvatar(
+                    child: Image.asset(
+                      image,
+                      height: 50,
+                    ),
+                    radius: 30,
+                    backgroundColor: color,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
+            ],
+          ));
+    else if (homeIndex == "home2")
+      return GestureDetector(
+          key: const ValueKey("home2"),
+          onTap: () {
+            String lesson;
+            FirebaseFirestore.instance
+                .collection('home')
+                .doc(homeIndex)
+                .get()
+                .then((DocumentSnapshot snapshot) {
+              if (snapshot.exists) {
+                print('Document exists on the database');
+                lesson = snapshot.data()['lesson1'];
+                // print(lesson);
+              }
+            });
+            Future.delayed(const Duration(milliseconds: 700), () {
+              Navigator.push(
+                  // EDIT: lesson1 -> lesson1
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Lesson1(lesson, homeIndex)));
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              // biểu tượng bài học đầu
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  // Transform.rotate(
+                  //   angle: 0,
+                  //   child: CircularProgressIndicator(
+                  //     backgroundColor: Colors.grey[300],
+                  //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
+                  //     value: .2,
+                  //     strokeWidth: 45,
+                  //   ),
+                  // ),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 40,
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[300],
+                    radius: 35,
+                  ),
+                  CircleAvatar(
+                    child: Image.asset(
+                      image,
+                      height: 50,
+                    ),
+                    radius: 30,
+                    backgroundColor: color,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
+            ],
+          ));
+    else
+      return GestureDetector(
+          onTap: () {
+            String lesson;
+            FirebaseFirestore.instance
+                .collection('home')
+                .doc(homeIndex)
+                .get()
+                .then((DocumentSnapshot snapshot) {
+              if (snapshot.exists) {
+                print('Document exists on the database');
+                lesson = snapshot.data()['lesson1'];
+                // print(lesson);
+              }
+            });
+            Future.delayed(const Duration(milliseconds: 700), () {
+              Navigator.push(
+                  // EDIT: lesson1 -> lesson1
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Lesson1(lesson, homeIndex)));
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              // biểu tượng bài học đầu
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  // Transform.rotate(
+                  //   angle: 0,
+                  //   child: CircularProgressIndicator(
+                  //     backgroundColor: Colors.grey[300],
+                  //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
+                  //     value: .2,
+                  //     strokeWidth: 45,
+                  //   ),
+                  // ),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[350],
+                    radius: 40,
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[300],
+                    radius: 35,
+                  ),
+                  CircleAvatar(
+                    child: Image.asset(
+                      image,
+                      height: 50,
+                    ),
+                    radius: 30,
+                    backgroundColor: color,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
+            ],
+          ));
   }
 
   Widget twoLesson(Widget lesson1, Widget lesson2) {

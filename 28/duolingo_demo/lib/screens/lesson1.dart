@@ -49,7 +49,7 @@ class _Lesson1State extends State<Lesson1> {
   @override
   void initState() {
     super.initState();
-    question = lesson.split(" ").map((e) => int.parse(e)).toList();
+    question = [0, 1];
     answerFromDB = 0;
     result = 0;
     isTapped = false;
@@ -176,6 +176,37 @@ class _Lesson1State extends State<Lesson1> {
   }
 
   Widget answer(String image, var number) {
+    if (number == 1) {
+      return GestureDetector(
+        key: const ValueKey("image1"),
+        onTap: () {
+          setState(() {
+            if (lastChecked != 0) {
+              isChecked[lastChecked - 1] = false;
+            }
+            isTapped = true;
+            numberTapped = number;
+            lastChecked = number;
+            isChecked[number - 1] = true;
+          });
+        },
+        child: Container(
+          height: 190,
+          width: 140,
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+                color: isChecked[number - 1] ? Colors.blue : Colors.grey,
+                width: 2),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Image.network(
+            image,
+            height: 190,
+          ),
+        ),
+      );
+    }
     return GestureDetector(
       onTap: () {
         setState(() {
