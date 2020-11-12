@@ -40,6 +40,7 @@ class _Lesson1State extends State<Lesson1> {
 
   bool isTapped;
   var numberTapped;
+  int answerFromDB;
   int result; // var dung trong body de hien thi widget button nao.
   var isChecked = [false, false, false, false];
   // luu vi tri gan nhat duoc Tap
@@ -49,6 +50,7 @@ class _Lesson1State extends State<Lesson1> {
   void initState() {
     super.initState();
     question = lesson.split(" ").map((e) => int.parse(e)).toList();
+    answerFromDB = 0;
     result = 0;
     isTapped = false;
     numberTapped = 0;
@@ -106,6 +108,7 @@ class _Lesson1State extends State<Lesson1> {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
                   snapshot.data.documents[question[countQuestion]]['question'],
+                  snapshot.data.documents[question[countQuestion]]['result'],
                   snapshot.data.documents[question[countQuestion]]
                       ['resultText'],
                   snapshot.data.documents[question[countQuestion]]
@@ -119,9 +122,16 @@ class _Lesson1State extends State<Lesson1> {
             }));
   }
 
-  Widget createBody(String question, String resultTextData, String urlAnswer1,
-      String urlAnswer2, String urlAnswer3, String urlAnswer4) {
+  Widget createBody(
+      String question,
+      int answerDB,
+      String resultTextData,
+      String urlAnswer1,
+      String urlAnswer2,
+      String urlAnswer3,
+      String urlAnswer4) {
     resultText = resultTextData;
+    answerFromDB = answerDB;
     return new Container(
       //margin: const EdgeInsets.all(10.0),
       margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
@@ -208,7 +218,7 @@ class _Lesson1State extends State<Lesson1> {
         ),
         onPressed: () {
           if (isTapped) {
-            if (numberTapped == 1) {
+            if (numberTapped == answerFromDB) {
               result = 1;
               setState(() {});
             } else {

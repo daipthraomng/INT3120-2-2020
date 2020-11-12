@@ -21,6 +21,7 @@ class _Lesson2State extends State<Lesson2> {
   var numberTapped;
   // trang thai man hinh: 0 - chua kiem tra
   // 1 - kiem tra dung; 2 - sai
+  int answerFromDB;
   int result;
   var isChecked = [false, false, false];
   // luu vi tri gan nhat duoc Tap
@@ -45,6 +46,7 @@ class _Lesson2State extends State<Lesson2> {
     countQuestion = 0;
     process = 3;
     resultText = "";
+    answerFromDB = 0;
     // getData();
   }
 
@@ -100,7 +102,7 @@ class _Lesson2State extends State<Lesson2> {
               //if (!snapshot.hasData) return Text('Loading data...');
               return createBody(
                   snapshot.data.documents[question[countQuestion]]['question'],
-                  //snapshot.data.documents[question[countQuestion]]['result'],
+                  snapshot.data.documents[question[countQuestion]]['result'],
                   snapshot.data.documents[question[countQuestion]]
                       ['resultText'],
                   snapshot.data.documents[question[countQuestion]]['answer1'],
@@ -127,9 +129,9 @@ class _Lesson2State extends State<Lesson2> {
   //   });
   // }
 
-  Widget createBody(String question, String resultTextData, String answer1,
-      String answer2, String answer3) {
-    //result = int.parse(resultInt);
+  Widget createBody(String question, int answerDB, String resultTextData,
+      String answer1, String answer2, String answer3) {
+    answerFromDB = answerDB;
     resultText = resultTextData;
     return Container(
       margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 15),
@@ -181,36 +183,6 @@ class _Lesson2State extends State<Lesson2> {
           ),
           new Padding(padding: EdgeInsets.all(30.0)),
 
-          // nút kiểm tra
-          // MaterialButton(
-          //   minWidth: 340.0,
-          //   color: isTapped ? Colors.green : Colors.grey,
-          //   height: 40.0,
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10.0),
-          //   ),
-          //   onPressed: () {
-          //     if (numberTapped == 1) {
-          //       debugPrint("true");
-          //       Navigator.push(
-          //           // EDIT: lesson1 -> lesson1
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (context) => Lesson2_TrueResult()));
-          //     } else {
-          //       debugPrint("wrong");
-          //       Navigator.push(
-          //           // EDIT: lesson1 -> lesson1
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (context) => Lesson2_FalseResult()));
-          //     }
-          //   },
-          //   child: new Text(
-          //     'KIỂM TRA',
-          //     style: new TextStyle(fontSize: 20.0, color: Colors.white),
-          //   ),
-          // ),
           if (result == 0) checkButton(),
           if (result == 1) rightCheckButton(),
           if (result == 2) falseCheckButton(),
@@ -270,7 +242,8 @@ class _Lesson2State extends State<Lesson2> {
         ),
         onPressed: () {
           if (isTapped) {
-            if (numberTapped == 1) {
+            if (numberTapped == answerFromDB) {
+              print(answerFromDB);
               result = 1;
               setState(() {});
             } else {
