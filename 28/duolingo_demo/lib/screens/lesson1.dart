@@ -209,10 +209,6 @@ class _Lesson1State extends State<Lesson1> {
         onPressed: () {
           if (isTapped) {
             if (numberTapped == 1) {
-              // Navigator.push(
-              //     // EDIT: lesson1 -> lesson1
-              //     context,
-              //     MaterialPageRoute(builder: (context) => Lesson1_TrueResult()));
               result = 1;
               setState(() {});
             } else {
@@ -287,11 +283,25 @@ class _Lesson1State extends State<Lesson1> {
                 onPressed: () {
                   print(countQuestion);
                   if (countQuestion == totalQuestionLesson1 - 1) {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
-                    // Future.delayed(const Duration(milliseconds: 200));
+                    String lesson;
+                    FirebaseFirestore.instance
+                        .collection('home')
+                        .doc(homeIndex)
+                        .get()
+                        .then((DocumentSnapshot snapshot) {
+                      if (snapshot.exists) {
+                        print('Document exists on the database');
+                        lesson = snapshot.data()['lesson2'];
+                      }
+                    });
+                    Future.delayed(const Duration(milliseconds: 700), () {
+                      Navigator.push(
+                          // EDIT: lesson1 -> lesson1
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Lesson2(lesson, homeIndex)));
+                    });
                   } else if (countQuestion == 0) {
                     countQuestion++;
                     result = 0;
@@ -354,11 +364,25 @@ class _Lesson1State extends State<Lesson1> {
                 onPressed: () {
                   print(countQuestion);
                   if (countQuestion == totalQuestionLesson1 - 1) {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Lesson2()));
-                    // Future.delayed(const Duration(milliseconds: 200));
+                    String lesson;
+                    FirebaseFirestore.instance
+                        .collection('home')
+                        .doc(homeIndex)
+                        .get()
+                        .then((DocumentSnapshot snapshot) {
+                      if (snapshot.exists) {
+                        print('Document exists on the database');
+                        lesson = snapshot.data()['lesson2'];
+                      }
+                    });
+                    Future.delayed(const Duration(milliseconds: 700), () {
+                      Navigator.push(
+                          // EDIT: lesson1 -> lesson1
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Lesson2(lesson, homeIndex)));
+                    });
                   } else if (countQuestion == 0) {
                     countQuestion++;
                     result = 0;
@@ -380,144 +404,3 @@ class _Lesson1State extends State<Lesson1> {
     );
   }
 }
-
-// class falseCheckButton extends StatelessWidget {
-//   const falseCheckButton({
-//     Key key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 400,
-//       height: 50,
-//       child: Stack(
-//         children: <Widget>[
-//           new Positioned(
-//               top: -70,
-//               child: Container(
-//                 width: 500,
-//                 height: 150.0,
-//                 decoration: new BoxDecoration(
-//                   color: Colors.red[100],
-//                 ),
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(15.0),
-//                   child: ListView(
-//                     children: [
-//                       Text(
-//                         'ĐÁP ÁN ĐÚNG:',
-//                         textAlign: TextAlign.left,
-//                         style: new TextStyle(
-//                           color: Colors.red[600],
-//                           fontSize: 20.0,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: 5,
-//                       ),
-//                       Text(
-//                         'coffee',
-//                         style: new TextStyle(
-//                           color: Colors.red[400],
-//                           fontSize: 20.0,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               )),
-//           Container(
-//             margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-//             child: Center(
-//               child: MaterialButton(
-//                 minWidth: 350.0,
-//                 color: Colors.red[600],
-//                 height: 40.0,
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(10.0),
-//                 ),
-//                 onPressed: () {
-//                   Navigator.push(
-//                       // EDIT: lesson1 -> lesson2
-//                       context,
-//                       MaterialPageRoute(builder: (context) => Lesson2()));
-//                 },
-//                 child: new Text(
-//                   'TIẾP TỤC',
-//                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//         overflow: Overflow.visible,
-//       ),
-//     );
-//   }
-// }
-
-// class rightCheckButton extends StatelessWidget {
-//   const rightCheckButton({
-//     Key key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 500,
-//       height: 50,
-//       //padding: EdgeInsets.all(2.0),
-//       child: Stack(
-//         children: <Widget>[
-//           new Positioned(
-//               top: -40,
-//               child: Container(
-//                 width: 500,
-//                 height: 120.0,
-//                 decoration: new BoxDecoration(
-//                   color: Colors.lightGreenAccent[100],
-//                 ),
-//                 child: Padding(
-//                   padding: EdgeInsets.only(
-//                       left: 15.0, right: 0.0, top: 10, bottom: 0),
-//                   child: Text(
-//                     'TUYỆT QUÁ!',
-//                     style: new TextStyle(
-//                       color: Colors.lightGreenAccent[700],
-//                       fontSize: 20.0,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ),
-//               )),
-//           Container(
-//             margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 0, bottom: 0),
-//             child: Center(
-//               child: MaterialButton(
-//                 minWidth: 350.0,
-//                 color: Colors.lightGreenAccent[700],
-//                 height: 40.0,
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(10.0),
-//                 ),
-//                 onPressed: () {
-//                   Navigator.push(
-//                       // EDIT: lesson1 -> lesson2
-//                       context,
-//                       MaterialPageRoute(builder: (context) => Lesson2()));
-//                 },
-//                 child: new Text(
-//                   'TIẾP TỤC',
-//                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//         overflow: Overflow.visible,
-//       ),
-//     );
-//   }
-// }

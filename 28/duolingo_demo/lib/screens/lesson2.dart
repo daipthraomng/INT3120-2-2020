@@ -3,15 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duolingo_demo/screens/screens.dart';
 
 class Lesson2 extends StatefulWidget {
-  final int indexQuestion;
-  // String homeIndex;
+  String lesson;
+  String homeIndex;
 
-  const Lesson2({Key key, this.indexQuestion}) : super(key: key);
+  Lesson2(this.lesson, this.homeIndex);
   @override
-  _Lesson2State createState() => _Lesson2State();
+  _Lesson2State createState() => _Lesson2State(lesson, homeIndex);
 }
 
 class _Lesson2State extends State<Lesson2> {
+  _Lesson2State(this.lesson, this.homeIndex);
+
+  String homeIndex;
+  String lesson;
+
   bool isTapped;
   var numberTapped;
   // trang thai man hinh: 0 - chua kiem tra
@@ -22,7 +27,6 @@ class _Lesson2State extends State<Lesson2> {
   var lastChecked;
   int index; // chi so cua cau hoi
 
-  String lesson; // lay ten cua bai hoc trong homeIndex
   var question = []; // mang chua cac cau hoi trong 1 homeIndex
   int countQuestion; // dem so cau hoi cung dang bai
   int process; // tien do hoan thanh
@@ -33,6 +37,7 @@ class _Lesson2State extends State<Lesson2> {
   @override
   void initState() {
     super.initState();
+    question = lesson.split(" ").map((e) => int.parse(e)).toList();
     isTapped = false;
     result = 0;
     numberTapped = 0; // chi so cua o duoc an
@@ -40,7 +45,7 @@ class _Lesson2State extends State<Lesson2> {
     countQuestion = 0;
     process = 3;
     resultText = "";
-    getData();
+    // getData();
   }
 
   @override
@@ -108,19 +113,19 @@ class _Lesson2State extends State<Lesson2> {
   }
 
   // ignore: missing_return
-  Future<String> getData() async {
-    final DocumentReference document =
-        // ignore: deprecated_member_use
-        FirebaseFirestore.instance.collection("home").document('home1');
+  // Future<String> getData() async {
+  //   final DocumentReference document =
+  //       // ignore: deprecated_member_use
+  //       FirebaseFirestore.instance.collection("home").document('home1');
 
-    // ignore: missing_return
-    await document.get().then<String>((DocumentSnapshot snapshot) async {
-      setState(() {
-        lesson = snapshot.data()['lesson2'];
-        question = lesson.split(" ").map((e) => int.parse(e)).toList();
-      });
-    });
-  }
+  //   // ignore: missing_return
+  //   await document.get().then<String>((DocumentSnapshot snapshot) async {
+  //     setState(() {
+  //       lesson = snapshot.data()['lesson2'];
+  //       question = lesson.split(" ").map((e) => int.parse(e)).toList();
+  //     });
+  //   });
+  // }
 
   Widget createBody(String question, String resultTextData, String answer1,
       String answer2, String answer3) {
