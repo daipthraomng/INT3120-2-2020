@@ -322,34 +322,7 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  print(countQuestion);
-                  if (countQuestion == totalQuestionLesson1 - 1) {
-                    String lesson;
-                    FirebaseFirestore.instance
-                        .collection('home')
-                        .doc(homeIndex)
-                        .get()
-                        .then((DocumentSnapshot snapshot) {
-                      if (snapshot.exists) {
-                        print('Document exists on the database');
-                        lesson = snapshot.data()['lesson2'];
-                      }
-                    });
-                    Future.delayed(const Duration(milliseconds: 700), () {
-                      Navigator.push(
-                          // EDIT: lesson1 -> lesson1
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Lesson2(lesson, homeIndex)));
-                    });
-                  } else if (countQuestion == 0) {
-                    countQuestion++;
-                    result = 0;
-                    isTapped = false;
-                    isChecked = [false, false, false, false];
-                    setState(() {});
-                  }
+                  checkAns();
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -403,34 +376,7 @@ class _Lesson1State extends State<Lesson1> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  print(countQuestion);
-                  if (countQuestion == totalQuestionLesson1 - 1) {
-                    String lesson;
-                    FirebaseFirestore.instance
-                        .collection('home')
-                        .doc(homeIndex)
-                        .get()
-                        .then((DocumentSnapshot snapshot) {
-                      if (snapshot.exists) {
-                        print('Document exists on the database');
-                        lesson = snapshot.data()['lesson2'];
-                      }
-                    });
-                    Future.delayed(const Duration(milliseconds: 700), () {
-                      Navigator.push(
-                          // EDIT: lesson1 -> lesson1
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Lesson2(lesson, homeIndex)));
-                    });
-                  } else if (countQuestion == 0) {
-                    countQuestion++;
-                    result = 0;
-                    isTapped = false;
-                    isChecked = [false, false, false, false];
-                    setState(() {});
-                  }
+                  checkAns();
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -443,5 +389,33 @@ class _Lesson1State extends State<Lesson1> {
         overflow: Overflow.visible,
       ),
     );
+  }
+
+  void checkAns() {
+    print(countQuestion);
+    if (countQuestion == totalQuestionLesson1 - 1) {
+      String lesson;
+      FirebaseFirestore.instance
+          .collection('home')
+          .doc(homeIndex)
+          .get()
+          .then((DocumentSnapshot snapshot) {
+        if (snapshot.exists) {
+          print('Document exists on the database');
+          lesson = snapshot.data()['lesson2'];
+          Navigator.push(
+            // EDIT: lesson1 -> lesson1
+            context,
+            MaterialPageRoute(
+                builder: (context) => Lesson2(lesson, homeIndex)));
+        }
+      });
+    } else if (countQuestion == 0) {
+      countQuestion++;
+      result = 0;
+      isTapped = false;
+      isChecked = [false, false, false, false];
+      setState(() {});
+    }
   }
 }

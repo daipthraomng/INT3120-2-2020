@@ -99,6 +99,7 @@ class _LevelsState extends State<Levels> {
           key: const ValueKey("home1"),
           onTap: () {
             String lesson;
+            bool isLoaded = false;
             FirebaseFirestore.instance
                 .collection('home')
                 .doc(homeIndex)
@@ -107,15 +108,13 @@ class _LevelsState extends State<Levels> {
               if (snapshot.exists) {
                 print('Document exists on the database');
                 lesson = snapshot.data()['lesson1'];
-                // print(lesson);
-              }
-            });
-            Future.delayed(const Duration(milliseconds: 700), () {
-              Navigator.push(
+                Navigator.push(
                   // EDIT: lesson1 -> lesson1
                   context,
                   MaterialPageRoute(
                       builder: (context) => Lesson1(lesson, homeIndex)));
+                // print(lesson);
+              }
             });
           },
           child: Column(

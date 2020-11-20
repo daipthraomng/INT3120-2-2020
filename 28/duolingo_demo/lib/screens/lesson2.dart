@@ -352,18 +352,7 @@ class _Lesson2State extends State<Lesson2> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < totalQuestionLesson2 - 1) {
-                    countQuestion++;
-                    result = 0;
-                    isTapped = false;
-                    isChecked = [false, false, false];
-                    setState(() {});
-                  } else {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Home()));
-                  }
+                  checkAns();
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -417,18 +406,7 @@ class _Lesson2State extends State<Lesson2> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 onPressed: () {
-                  if (countQuestion < totalQuestionLesson2 - 1) {
-                    countQuestion++;
-                    result = 0;
-                    isTapped = false;
-                    isChecked = [false, false, false];
-                    setState(() {});
-                  } else {
-                    Navigator.push(
-                        // EDIT: lesson1 -> lesson2
-                        context,
-                        MaterialPageRoute(builder: (context) => Home()));
-                  }
+                  checkAns();
                 },
                 child: new Text(
                   'TIẾP TỤC',
@@ -441,5 +419,20 @@ class _Lesson2State extends State<Lesson2> {
         overflow: Overflow.visible,
       ),
     );
+  }
+
+  void checkAns() {
+    if (countQuestion < totalQuestionLesson2 - 1) {
+      countQuestion++;
+      result = 0;
+      isTapped = false;
+      isChecked = [false, false, false];
+      setState(() {});
+    } else {
+      Navigator.push(
+          // EDIT: lesson1 -> lesson2
+          context,
+          MaterialPageRoute(builder: (context) => Home()));
+    }
   }
 }
